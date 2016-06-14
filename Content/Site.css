@@ -1,0 +1,92 @@
+﻿body {
+    padding-top: 50px;
+    background: url('bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+       font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.btn{
+        box-shadow: 5px 5px 2px #888888 !important;
+}
+
+.jumbotron {
+    text-align:center;
+}
+.container{
+    background-color:white;
+    opacity:0.96;
+}
+
+.footer1{
+    background-color:black;
+    font-size:large;
+    text-align: center;
+    min-height:170px;
+    opacity:0.7;
+    padding:50px 0;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.footer1 a, .footer1 a:hover, .footer1 a:visited,  .footer1 a:after{
+    text-decoration:none;
+    color:white;
+}
+
+pagination{
+
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+/* define angular animation */
+div {
+  transition: all linear 1s;
+     -webkit-transition: all linear 0.5s;
+
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.ng-hide {
+
+  background-color: transparent;
+  top:-20px;
+
+}
+
+/*animate search*/
+.animate.ng-enter, .animate.ng-leave {
+transition:  ease-in all 0.5s;
+position: relative;
+display: block;
+} 
+.animate.ng-enter.animate.ng-enter-active, .animate.ng-leave {
+left: 0;
+}
+.animate.ng-leave.animate.ng-leave-active, .animate.ng-enter {
+left: 500px;
+}
+

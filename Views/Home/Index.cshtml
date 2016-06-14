@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <br/>
+    <!--this is customerController -->
+    <div data-ng-controller="customerController">
+        <button class="btn btn-info" ng-click="toggleCustomer()">Toggle Customers table!</button>
+        <br />
+        <div id="custCtrl" ng-hide="myVarCustomer">
+            <div class="row">
+                <div class="col-md-12">
+                    <strong class="error">{{ error }}</strong>
+                    <br />
+                    <h4>{{customers.length}} records found in Customers table</h4>
+                    <div data-ng-hide="addMode"><a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary">Add New</a></div>
+                    <form name="addCustomer" data-ng-show="addMode" style="width:600px;margin:0px auto;">
+                        <div class="form-group">
+                            <label for="cid" class="col-sm-2 control-label">ID:</label>
+                            <div class="col-sm-10">
+                                <input  type="text" class="form-control" id="cid" placeholder="please enter id" data-ng-model="newcustomer.CustomerID" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cname" class="col-sm-2 control-label">Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="cname" placeholder="please enter your name" data-ng-model="newcustomer.CompanyName" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">Address:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="address" placeholder="please enter your address" data-ng-model="newcustomer.Address" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="col-sm-2 control-label">City:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="city" placeholder="please enter your city" data-ng-model="newcustomer.City" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" class="col-sm-2 control-label">Country:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="country" placeholder="please enter your country" data-ng-model="newcustomer.Country" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="age" class="col-sm-2 control-label">Phone:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Phone" placeholder="please enter phone" data-ng-model="newcustomer.Phone" required />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input type="submit" value="Add" data-ng-click="add()" data-ng-disabled="!addCustomer.$valid" class="btn btn-primary" />
+                                <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Search: <input type="text" ng-model="filter" /></p>
+                    <p>
+                        Please choose how many records to list per page:
+                        <select ng-model="quantity">
+                            <option value="5" ng-selected="5">5</option>
+                            <option value="10">10</option>
+                            <option value="100">All</option>
+                        </select>
+
+                       &nbsp;&nbsp;&nbsp;&nbsp;  Order by:
+                        <select ng-model="myOrderBy">
+                            <option >CompanyName</option>
+                            <option>Address</option>
+                            <option>City</option>
+                            <option>PostalCode</option>
+                            <option>Country</option>
+                        </select>
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" style="width:800px">
+                            <tr style="background-color:gray; color:white">
+                                <th>#</th>
+                                <th ng-click="orderByMe('CompanyName')">CompanyName</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>PostalCode</th>
+                                <th>Country</th>
+                                <th></th>
+                            </tr>
+                            <tr class="animate" data-ng-repeat="customer in customers | orderBy:myOrderBy | limitTo:quantity | filter:filter">
+                                <td><strong data-ng-hide="customer.editMode">{{ customer.CustomerID }}</strong></td>
+                                <td>
+                                    <p data-ng-hide="customer.editMode">{{ customer.CompanyName }}</p>
+                                    <input data-ng-show="customer.editMode" type="text" data-ng-model="customer.CompanyName" />
+                                </td>
+                                <td>
+                                    <p data-ng-hide="customer.editMode">{{ customer.Address }}</p>
+                                    <input data-ng-show="customer.editMode" type="text" data-ng-model="customer.Address" />
+                                </td>
+                                <td>
+                                    <p data-ng-hide="customer.editMode">{{ customer.City }}</p>
+                                    <input data-ng-show="customer.editMode" type="text" data-ng-model="customer.City" />
+                                </td>
+                                <td>
+                                    <p data-ng-hide="customer.editMode">{{ customer.Country }}</p>
+                                    <input data-ng-show="customer.editMode" type="text" data-ng-model="customer.Country" />
+                                </td>
+                                <td>
+                                    <p data-ng-hide="customer.editMode">{{ customer.Phone }}</p>
+                                    <input data-ng-show="customer.editMode" type="text" data-ng-model="customer.Phone" />
+                                </td>
+                                <td>
+                                    <p data-ng-hide="customer.editMode"><a data-ng-click="toggleEdit(customer)" href="javascript:;">Edit</a> | <a data-ng-click="deletecustomer(customer)" href="javascript:;">Delete</a></p>
+                                    <p data-ng-show="customer.editMode"><a data-ng-click="save(customer)" href="javascript:;">Save</a> | <a data-ng-click="toggleEdit(customer)" href="javascript:;">Cancel</a></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- this is for animation -->
+            <div id="mydiv" data-ng-show="loading">
+                <img src="Images/ajax-loader.gif" class="ajax-loader" />
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <!-- this is orderController -->
+    <div data-ng-controller="orderController">
+        <button class="btn btn-info" ng-click="toggleOrder()">Toggle Orders table!</button>
+
+        <div ng-hide="myVarOrder">
+            <div class="row">
+                <div class="col-md-12">
+                    <strong class="error">{{ error }}</strong>
+                      
+                      @*Orders table with pagination*@
+                        <h4>{{Orders.length}} records found in Orders table</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" style="width:800px">
+                                <tr style="background-color:gray; color:white">
+                                    <th>#</th>
+                                    <th>OrderDate</th>
+                                    <th>ShippedDate</th>
+                                    <th>ShipName</th>
+                                    <th>ShipAddress</th>
+                                </tr>
+                                <tr data-ng-repeat="order in filteredTodos | limitTo: numPerPage">
+                                    <td><strong>{{ order.OrderID }}</strong></td>
+                                    <td>{{ order.OrderDate | date }}</td>
+                                    <td>{{ order.ShippedDate |date }}</td>
+                                    <td>{{ order.ShipName }}</td>
+                                    <td>{{ order.ShipAddress }}</td>
+                                </tr>
+                            </table>
+                            <pagination ng-model="currentPage"
+                                        total-items="Orders.length"
+                                        max-size="maxSize"
+                                        boundary-links="true">
+                            </pagination>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
